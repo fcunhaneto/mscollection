@@ -1,0 +1,6 @@
+"""
+Class for edit creator.
+
+:param main: Reference for main windows.
+:param type: Type object, movie or series.
+"""
