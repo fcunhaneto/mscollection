@@ -447,6 +447,7 @@ class EditMovie(QMdiSubWindow):
         self.le_title.setText('')
         self.le_original_title.setText('')
         self.le_year.setText('')
+        self.le_time.setText('')
         self.le_poster.setText('')
         self.le_url.setText('')
         self.le_summary.setText('')

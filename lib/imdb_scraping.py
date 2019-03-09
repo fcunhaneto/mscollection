@@ -25,6 +25,7 @@ class ImdbScraping:
             'title': None,
             'original_title': None,
             'year': None,
+            'time': None,
             'poster': None,
             'summary': None,
             'categories': None,
@@ -61,6 +62,10 @@ class ImdbScraping:
                 self.result['year'] = date[2]
             elif self.obj == 'series':
                 self.result['year'] = date[2][1:5]
+
+        # Time
+        get_time = self.soup.find('div', {'class': 'subtext'}).time.text
+        self.result['time'] = get_time.strip()
 
         # Poster
         poster = self.soup.find('div', {'class': 'poster'}).a.img

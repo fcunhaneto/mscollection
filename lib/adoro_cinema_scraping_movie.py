@@ -21,9 +21,10 @@ class AdoroCinemaMovieScraping:
             'title': None,
             'original_title': None,
             'year': None,
+            'time': None,
             'poster': None,
             'summary': None,
-            'categories': None,
+            'categories': [],
             'director_creator': None,
             'cast': None
         }
@@ -39,7 +40,7 @@ class AdoroCinemaMovieScraping:
                 self.result['title'] = self.soup1.\
                     find('div', {'class': 'titlebar-title'}).text
             except AttributeError:
-                self.result['title'] = ''
+                pass
 
         # Original Title
         if self.soup1.find('h2', {'class', 'that'}):
@@ -47,7 +48,7 @@ class AdoroCinemaMovieScraping:
                 self.result['original_title'] = self.soup1.\
                     find('h2', {'class', 'that'}).text
             except AttributeError:
-                self.result['original_title'] = ''
+                pass
         # Year
         if self.soup1.find('span', text=re.compile(r"^Data de lançamento$")):
             try:
@@ -68,27 +69,39 @@ class AdoroCinemaMovieScraping:
                     find('span', text=re.compile(r"^Direção:$")). \
                     find_next_sibling('a').text
             except AttributeError:
-                self.result['director_creator'] = ''
+                pass
         elif self.soup1.find(itemprop="director"):
             try:
                 self.result['director_creator'] = self.soup1.find(itemprop="director").get_text()
             except AttributeError:
-                self.result['director_creator'] = ''
+                pass
+
+        # Time
+        try:
+            div = self.soup1.find('span', text=re.compile(
+                r"^Data de lançamento$")).parent.get_text()
+            s = div.replace('\n', '')
+            s = s.partition('(')
+            s = s[-1].replace(')', '')
+            self.result['time']  = s
+        except AttributeError:
+            pass
+
         # Categories
         if self.soup1.find('span', text=re.compile(r"^Gêneros$")):
             try:
                 category1 = self.soup1.find('span', text=re.compile(r"^Gêneros$")).\
                 find_next_sibling().text
+                self.result['categories'].append(category1)
             except AttributeError:
-                category1 = ''
+                pass
 
             try:
                 category2 = self.soup1.find('span',text=re.compile( r"^Gêneros$")).\
                     find_next_sibling().find_next_sibling().text
+                self.result['categories'].append(category2)
             except AttributeError:
-                category2 = ''
-
-            self.result['categories'] = [category1, category2]
+                pass
 
         # Summary
         if self.soup1.findAll('section', {'id': 'synopsis-details'}):
@@ -100,8 +113,6 @@ class AdoroCinemaMovieScraping:
                 self.result['summary'] = self.soup1. \
                     find('section', {'id': 'synopsis-details'}). \
                     find('div', {'class': 'content-txt'}).text
-
-
 
         # Poster
         if self.soup1.find('div', {'class': 'movie-card-overview'}):
@@ -132,9 +143,6 @@ class AdoroCinemaMovieScraping:
         http = urlopen(url2)
 
         soup2 = BeautifulSoup(http, 'lxml')
-
-        # with open("ch2.html", "wb") as file:
-        #     file.write(html2)
 
         if soup2.findAll('section', {'id': 'actors'}):
             section = soup2.find('section', {'id': 'actors'}).find_all('a')
