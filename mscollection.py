@@ -73,7 +73,7 @@ class MSCollection(QMainWindow):
         self.setGeometry(x, y, width, height)
 
         self.mdi_area = QMdiArea()
-        brush = QBrush(QColor(222, 242, 225))
+        brush = QBrush(QColor(250, 248, 224))
         brush.setStyle(Qt.SolidPattern)
         self.mdi_area.setBackground(brush)
 
