@@ -159,4 +159,42 @@ class ImdbScraping:
 
                 self.result['cast'] = cast
 
+        # Actor
+        rows = self.soup.findAll('td', {'class': 'primary_photo'})
+        actor = []
+        for row in rows:
+            s = row.findNext('td').get_text()
+            s = s.replace('\n', '')
+            actor.append(s)
+
+        # Character
+        chars = self.soup.findAll('td', {'class': 'character'})
+        character = []
+        for c in chars:
+            s = c.text.strip()
+            s = s.replace('\n', '')
+
+            if '/' in s:
+                b = s.split('/')
+                total = len(b)
+                i = 0
+                char = b[0]
+                for j in range(1, total):
+                    r = b[j].strip()
+                    if i < total:
+                        char += '/ ' + r
+                    else:
+                        char += r
+                    i += 1
+                s = char
+
+            character.append(s)
+
+        ac = []
+        total = len(actor)
+        for i in range(total):
+            ac.append([actor[i], character[i]])
+
+        self.result['cast'] = ac
+
         return self.result
