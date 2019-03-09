@@ -93,7 +93,7 @@ class InsertMovie(QMdiSubWindow):
         self.pb_search_ad = pb_create(texts.pb_imdb_ad_search, height=25,
                                       width=200)
         self.pb_search_ad.clicked.connect(lambda type: self.set_movie_url('ad'))
-        self.pb_search_ad.setShortcut('CTRL+Shift+D')
+        self.pb_search_ad.setShortcut('CTRL+Shift+A')
         self.pb_search_ad.setEnabled(False)
         self.pb_search_ad.setHidden(True)
 

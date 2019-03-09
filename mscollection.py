@@ -1,11 +1,3 @@
-#!/home/francisco/Projects/Pycharm/mscollection_qt12/venv/bin/python
-#!/home/francisco/Projects/Pycharm/mscollection_qt12/venv/bin/python
-#!/home/francisco/Projects/Pycharm/mscollection_qt12/venv/bin/python
-#!/home/francisco/Projects/Pycharm/mscollection_qt12/venv/bin/python
-#!/home/francisco/Projects/Pycharm/mscollection_qt12/venv/bin/python
-#!/home/francisco/Projects/Pycharm/mscollection_qt12/venv/bin/python
-#!/home/francisco/Projects/Pycharm/mscollection_qt12/venv/bin/python
-#!/home/francisco/Projects/Pycharm/mscollection_qt12/venv/bin/python
 import sys
 
 from PyQt5.QtCore import Qt
@@ -81,8 +73,7 @@ class MSCollection(QMainWindow):
         self.setGeometry(x, y, width, height)
 
         self.mdi_area = QMdiArea()
-        # self.mdi_area.setGeometry(0, 0, 1022, 722)
-        brush = QBrush(QColor(232, 232, 232))
+        brush = QBrush(QColor(222, 242, 225))
         brush.setStyle(Qt.SolidPattern)
         self.mdi_area.setBackground(brush)
 
