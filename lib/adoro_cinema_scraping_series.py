@@ -40,27 +40,40 @@ class AdoroCinemaSeriesScraping:
 
         # Year Categories
         if self.soup.find('div', {'class': 'meta-body-info'}):
-            cats = self.soup.find('div', {'class': 'meta-body-info'})
-            year = cats.text.split()
-            if year[0] == 'Desde':
-                self.result['year'] = year[1]
-            else:
-                self.result['year'] = year[0]
+            try:
+                cats = self.soup.find('div', {'class': 'meta-body-info'})
+                year = cats.text.split()
 
-            categories = []
-            for d in cats.children:
-                if d.name == 'span' and d.text != '/':
-                    categories.append(d.text)
+                if year[0] == 'Desde':
+                    self.result['year'] = year[1]
+                else:
+                    self.result['year'] = year[0]
 
-            self.result['categories'] = categories
+
+                categories = []
+                for d in cats.children:
+                    if d.name == 'span' and d.text != '/':
+                        categories.append(d.text)
+
+                self.result['categories'] = categories
+            except AttributeError:
+                self.result['year'] = ''
+                self.result['categories'] = ''
 
         # Creator
         if self.soup.find('div', {'class': 'meta-body-direction'}):
-            self.result['director_creator'] = self.soup.\
-                find('div', {'class': 'meta-body-direction'}).a.text
+            try:
+                self.result['director_creator'] = self.soup.\
+                    find('div', {'class': 'meta-body-direction'}).a.text
+            except AttributeError:
+                self.result['director_creator'] = ''
 
         if self.soup.find('div', {'class': 'content-txt'}):
-            self.result['summary'] = self.soup.find('div', {'class': 'content-txt'}).text.strip()
+            try:
+                self.result['summary'] = self.soup.\
+                    find('div', {'class': 'content-txt'}).text.strip()
+            except AttributeError:
+                self.result['summary'] = ''
 
         # Poster
         if self.soup.find('div', {'class': 'entity-card'}):

@@ -35,14 +35,19 @@ class AdoroCinemaMovieScraping:
         """
         # Title
         if self.soup1.find('div', {'class': 'titlebar-title'}):
-            self.result['title'] = self.soup1.\
-                find('div', {'class': 'titlebar-title'}).text
+            try:
+                self.result['title'] = self.soup1.\
+                    find('div', {'class': 'titlebar-title'}).text
+            except AttributeError:
+                self.result['title'] = ''
 
         # Original Title
         if self.soup1.find('h2', {'class', 'that'}):
-            self.result['original_title'] = self.soup1.\
-                find('h2', {'class', 'that'}).text
-
+            try:
+                self.result['original_title'] = self.soup1.\
+                    find('h2', {'class', 'that'}).text
+            except AttributeError:
+                self.result['original_title'] = ''
         # Year
         if self.soup1.find('span', text=re.compile(r"^Data de lançamento$")):
             try:
@@ -58,22 +63,32 @@ class AdoroCinemaMovieScraping:
 
         # Director
         if self.soup1.find('span', text=re.compile(r"^Direção:$")):
-            self.soup1. \
-                find('span', text=re.compile(r"^Direção:$")). \
-                find_next_sibling('a')
-            self.result['director_creator'] = self.soup1.\
-                find('span', text=re.compile(r"^Direção:$")). \
-                find_next_sibling('a').text
+            try:
+                self.result['director_creator'] = self.soup1.\
+                    find('span', text=re.compile(r"^Direção:$")). \
+                    find_next_sibling('a').text
+            except AttributeError:
+                self.result['director_creator'] = ''
         elif self.soup1.find(itemprop="director"):
-            self.result['director_creator'] = self.soup1.find(itemprop="director").get_text()
-
+            try:
+                self.result['director_creator'] = self.soup1.find(itemprop="director").get_text()
+            except AttributeError:
+                self.result['director_creator'] = ''
         # Categories
         if self.soup1.find('span', text=re.compile(r"^Gêneros$")):
-            category1 = self.soup1.find('span', text=re.compile(r"^Gêneros$")).\
-                find_next_sibling()
-            category2 = self.soup1.find('span',text=re.compile( r"^Gêneros$")).\
-                find_next_sibling().find_next_sibling()
-            self.result['categories'] = [category1.text, category2.text]
+            try:
+                category1 = self.soup1.find('span', text=re.compile(r"^Gêneros$")).\
+                find_next_sibling().text
+            except AttributeError:
+                category1 = ''
+
+            try:
+                category2 = self.soup1.find('span',text=re.compile( r"^Gêneros$")).\
+                    find_next_sibling().find_next_sibling().text
+            except AttributeError:
+                category2 = ''
+
+            self.result['categories'] = [category1, category2]
 
         # Summary
         if self.soup1.findAll('section', {'id': 'synopsis-details'}):
