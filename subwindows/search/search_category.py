@@ -14,7 +14,7 @@ from db.db_settings import Database as DB
 from lib.function_lib import cb_create, populate_combobox, \
     pb_create, le_create, db_select_all, get_combobox_info
 
-
+# TODO Colorir celulas selecionadas
 class SearchCategory(QMdiSubWindow):
     def __init__(self, main, type):
         """
@@ -91,6 +91,10 @@ class SearchCategory(QMdiSubWindow):
         self.table = QTableWidget()
         self.table.horizontalHeader().sectionClicked.connect(self.repaint_cells)
         self.rows = 0
+        if self.type == 'movie':
+            self.num_col = 7
+        else:
+            self.num_col = 6
         self.clear_table()
         self.set_table()
 
@@ -105,27 +109,49 @@ class SearchCategory(QMdiSubWindow):
         """
         self.table.clear()
         self.table.setRowCount(0)
-        self.table.setColumnCount(6)
+        self.table.setColumnCount(self.num_col)
+        if self.type == 'movie':
+            headers = [
+                texts.title_s,
+                texts.category_1,
+                texts.category_2,
+                texts.media_s,
+                texts.lb_time,
+                texts.year_s,
+                'id'
+            ]
+
+            self.table.setHorizontalHeaderLabels(headers)
+
+            col_width = self.width - 40
+            self.table.setColumnWidth(0, 0.4 * col_width)
+            self.table.setColumnWidth(1, 0.18 * col_width)
+            self.table.setColumnWidth(2, 0.18 * col_width)
+            self.table.setColumnWidth(3, 0.08 * col_width)
+            self.table.setColumnWidth(4, 0.08 * col_width)
+            self.table.setColumnWidth(5, 0.08 * col_width)
+            self.table.setColumnWidth(6, 0)
+        else:
+            headers = [
+                texts.title_s,
+                texts.category_1,
+                texts.category_2,
+                texts.media_s,
+                texts.year_s,
+                'id'
+            ]
+
+            self.table.setHorizontalHeaderLabels(headers)
+
+            col_width = self.width - 40
+            self.table.setColumnWidth(0, 0.4 * col_width)
+            self.table.setColumnWidth(1, 0.2 * col_width)
+            self.table.setColumnWidth(2, 0.2 * col_width)
+            self.table.setColumnWidth(3, 0.1 * col_width)
+            self.table.setColumnWidth(4, 0.1 * col_width)
+            self.table.setColumnWidth(5, 0)
+
         self.rows = 0
-
-        headers = [
-            texts.title_s,
-            texts.category_1,
-            texts.category_2,
-            texts.media_s,
-            texts.year_s,
-            'id'
-        ]
-
-        self.table.setHorizontalHeaderLabels(headers)
-
-        col_width = self.width - 40
-        self.table.setColumnWidth(0, 0.4 * col_width)
-        self.table.setColumnWidth(1, 0.2 * col_width)
-        self.table.setColumnWidth(2, 0.2 * col_width)
-        self.table.setColumnWidth(3, 0.1 * col_width)
-        self.table.setColumnWidth(4, 0.1 * col_width)
-        self.table.setColumnWidth(5, 0)
 
         self.table.verticalHeader().setVisible(False)
         self.table.setStyleSheet('background-color: #FFFFFF;')
@@ -136,8 +162,9 @@ class SearchCategory(QMdiSubWindow):
         """
         When the table is self-reclassified repaint it.
         """
+
         for r in range(self.rows):
-            for i in range(6):
+            for i in range(self.num_col):
                 if r % 2 == 0:
                     self.table.item(r, i).setBackground(
                         QColor(240, 250, 228))
@@ -156,7 +183,7 @@ class SearchCategory(QMdiSubWindow):
         """
         if self.row_select != row and col == 0:
             if self.type == 'movie':
-                obj_id = self.table.item(row, 5).text()
+                obj_id = self.table.item(row, 6).text()
                 obj = self.session.query(Movie).get(obj_id)
             else:
                 obj_id = self.table.item(row, 5).text()
@@ -207,10 +234,15 @@ class SearchCategory(QMdiSubWindow):
             else:
                 self.table.setItem(self.rows, 3, QTableWidgetItem(''))
 
-            self.table.setItem(self.rows, 4, QTableWidgetItem(obj.year))
-            self.table.setItem(self.rows, 5, QTableWidgetItem(str(obj.id)))
+            if self.type == 'movie':
+                self.table.setItem(self.rows, 4, QTableWidgetItem(obj.time))
+                self.table.setItem(self.rows, 5, QTableWidgetItem(obj.year))
+                self.table.setItem(self.rows, 6, QTableWidgetItem(str(obj.id)))
+            else:
+                self.table.setItem(self.rows, 4, QTableWidgetItem(obj.year))
+                self.table.setItem(self.rows, 5, QTableWidgetItem(str(obj.id)))
 
-            for i in range(6):
+            for i in range(self.num_col):
                 if self.rows % 2 == 0:
                     self.table.item(self.rows, i).setBackground(
                         QColor(240, 250, 228))
@@ -279,10 +311,15 @@ class SearchCategory(QMdiSubWindow):
             else:
                 self.table.setItem(self.rows, 3, QTableWidgetItem(''))
 
-            self.table.setItem(self.rows, 4, QTableWidgetItem(obj.year))
-            self.table.setItem(self.rows, 5, QTableWidgetItem(str(obj.id)))
+            if self.type == 'movie':
+                self.table.setItem(self.rows, 4, QTableWidgetItem(obj.time))
+                self.table.setItem(self.rows, 5, QTableWidgetItem(obj.year))
+                self.table.setItem(self.rows, 6, QTableWidgetItem(str(obj.id)))
+            else:
+                self.table.setItem(self.rows, 4, QTableWidgetItem(obj.year))
+                self.table.setItem(self.rows, 5, QTableWidgetItem(str(obj.id)))
 
-            for i in range(6):
+            for i in range(self.num_col):
                 if self.rows % 2 == 0:
                     self.table.item(self.rows, i).setBackground(
                         QColor(240, 250, 228))
@@ -329,7 +366,7 @@ class SearchCategory(QMdiSubWindow):
                 obj_category = self.obj.filter(Series.id.notin_(sub)).\
                     order_by(Series.name).all()
 
-        self.set_table_query(obj_category, id)
+        self.set_table_query(obj_category)
 
     def clear(self):
         """

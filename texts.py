@@ -108,6 +108,7 @@ lb_quantity = 'Quantidade'
 lb_total = 'Total'
 lb_episode_search = 'Pesquisar Episódio'
 lb_select_series = 'Primeiro selecione a série'
+lb_time = 'Tempo'
 
 # Table Headers
 code = 'Cód.'
@@ -167,6 +168,7 @@ ms_episode_search = "<html><head/><body>" \
                     "insira aqui" \
                     "</p><html><head/><body>"
 season_num_tt = 'Número da temporada'
+time_tt = 'Tempo de duração do filme.'
 
 # Error Message
 no_title = 'O campo título é obrigatório.'

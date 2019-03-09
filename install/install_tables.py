@@ -123,6 +123,7 @@ class Movie(Base):
     last_edit = Column(DateTime, nullable=False)
     new_edit = Column(DateTime, default=datetime.datetime.utcnow(),
                        nullable=False)
+    time = Column(String(10), nullable=True)
 
     media = relationship(Media, uselist=False)
     box = relationship(Box, uselist=False)

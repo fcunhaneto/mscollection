@@ -81,19 +81,27 @@ class EditMovie(QMdiSubWindow):
         self.fm_1.setWidget(0, QFormLayout.LabelRole, self.lb_title)
         self.fm_1.setWidget(0, QFormLayout.FieldRole, self.le_title)
 
-        # Year/Media
+        # Year
         self.lb_year = QLabel(texts.year_s)
         self.le_year = le_create(4)
         self.fm_1.setWidget(1, QFormLayout.LabelRole, self.lb_year)
         self.fm_1.setWidget(1, QFormLayout.FieldRole, self.le_year)
+
+        # Media
+        self.lb_media = QLabel(texts.media_s)
+        media = db_select_all(self.session, Media)
+        self.cb_media = cb_create()
+        populate_combobox(self.cb_media, media)
+        self.fm_1.setWidget(2, QFormLayout.LabelRole, self.lb_media)
+        self.fm_1.setWidget(2, QFormLayout.FieldRole, self.cb_media)
 
         # Category 1
         category = db_select_all(self.session, Category)
         self.lb_category_1 = QLabel(texts.category_1)
         cb_category_1 = cb_create()
         populate_combobox(cb_category_1, category)
-        self.fm_1.setWidget(2, QFormLayout.LabelRole, self.lb_category_1)
-        self.fm_1.setWidget(2, QFormLayout.FieldRole, cb_category_1)
+        self.fm_1.setWidget(3, QFormLayout.LabelRole, self.lb_category_1)
+        self.fm_1.setWidget(3, QFormLayout.FieldRole, cb_category_1)
         self.cb_categories.append(cb_category_1)
 
         # Box
@@ -101,16 +109,8 @@ class EditMovie(QMdiSubWindow):
         self.lb_box = QLabel(texts.box)
         self.cb_box = cb_create()
         populate_combobox(self.cb_box, box)
-        self.fm_1.setWidget(3, QFormLayout.LabelRole, self.lb_box)
-        self.fm_1.setWidget(3, QFormLayout.FieldRole, self.cb_box)
-
-        # Director
-        director = db_select_all(self.session, Director)
-        self.lb_director = QLabel(texts.director_s)
-        self.cb_director = cb_create()
-        populate_combobox(self.cb_director, director)
-        self.fm_1.setWidget(4, QFormLayout.LabelRole, self.lb_director)
-        self.fm_1.setWidget(4, QFormLayout.FieldRole, self.cb_director)
+        self.fm_1.setWidget(4, QFormLayout.LabelRole, self.lb_box)
+        self.fm_1.setWidget(4, QFormLayout.FieldRole, self.cb_box)
 
         # Web URL
         self.lb_url = QLabel(texts.lb_url)
@@ -129,20 +129,26 @@ class EditMovie(QMdiSubWindow):
         self.fm_2.setWidget(0, QFormLayout.LabelRole, self.lb_original_title)
         self.fm_2.setWidget(0, QFormLayout.FieldRole, self.le_original_title)
 
-        # Media
-        self.lb_media = QLabel(texts.media_s)
-        media = db_select_all(self.session, Media)
-        self.cb_media = cb_create()
-        populate_combobox(self.cb_media, media)
-        self.fm_2.setWidget(1, QFormLayout.LabelRole, self.lb_media)
-        self.fm_2.setWidget(1, QFormLayout.FieldRole, self.cb_media)
+        # Director
+        director = db_select_all(self.session, Director)
+        self.lb_director = QLabel(texts.director_s)
+        self.cb_director = cb_create()
+        populate_combobox(self.cb_director, director)
+        self.fm_2.setWidget(1, QFormLayout.LabelRole, self.lb_director)
+        self.fm_2.setWidget(1, QFormLayout.FieldRole, self.cb_director)
+
+        self.lb_time = QLabel(texts.lb_time)
+        self.le_time = le_create(10, texts.time_tt)
+        self.le_time.setPlaceholderText(texts.time_tt)
+        self.fm_2.setWidget(2, QFormLayout.LabelRole, self.lb_time)
+        self.fm_2.setWidget(2, QFormLayout.FieldRole, self.le_time)
 
         # Category 2
         self.lb_category_2 = QLabel(texts.category_2)
         cb_category_2 = cb_create()
         populate_combobox(cb_category_2, category)
-        self.fm_2.setWidget(2, QFormLayout.LabelRole, self.lb_category_2)
-        self.fm_2.setWidget(2, QFormLayout.FieldRole, cb_category_2)
+        self.fm_2.setWidget(3, QFormLayout.LabelRole, self.lb_category_2)
+        self.fm_2.setWidget(3, QFormLayout.FieldRole, cb_category_2)
         self.cb_categories.append(cb_category_2)
 
         # KeyWord
@@ -150,14 +156,35 @@ class EditMovie(QMdiSubWindow):
         self.lb_keyword = QLabel(texts.keyword)
         self.cb_keyword = cb_create()
         populate_combobox(self.cb_keyword, keyword)
-        self.fm_2.setWidget(3, QFormLayout.LabelRole, self.lb_keyword)
-        self.fm_2.setWidget(3, QFormLayout.FieldRole, self.cb_keyword)
+        self.fm_2.setWidget(4, QFormLayout.LabelRole, self.lb_keyword)
+        self.fm_2.setWidget(4, QFormLayout.FieldRole, self.cb_keyword)
 
         # Poster
         self.lb_poster = QLabel(texts.poster)
         self.le_poster = le_create(255)
-        self.fm_2.setWidget(4, QFormLayout.LabelRole, self.lb_poster)
-        self.fm_2.setWidget(4, QFormLayout.FieldRole, self.le_poster)
+        self.fm_2.setWidget(5, QFormLayout.LabelRole, self.lb_poster)
+        self.fm_2.setWidget(5, QFormLayout.FieldRole, self.le_poster)
+
+        # Horizontal Layout for Frame layout
+        self.hbox_fms = QHBoxLayout()
+        self.hbox_fms.addLayout(self.fm_1)
+        self.hbox_fms.addLayout(self.fm_2)
+
+        self.vbox_main.addLayout(self.hbox_fms)
+
+        # Cast Summary
+        self.hbox_summary_cast = hbox_create([], 0)
+        self.hbox_summary_cast.setContentsMargins(20, 0, 20, 0)
+        self.vbox_summary = QVBoxLayout()
+
+        # Summary
+        self.lb_summary = QLabel(texts.summary_s)
+        self.le_summary = QTextEdit()
+        self.vbox_summary.addWidget(self.lb_summary)
+        self.vbox_summary.addWidget(self.le_summary)
+        self.vbox_summary.setSpacing(20)
+        self.hbox_summary_cast.addLayout(self.vbox_summary)
+        self.hbox_summary_cast.setSpacing(20)
 
         # Horizontal Layout for Frame layout
         self.hbox_fms = QHBoxLayout()
@@ -271,6 +298,7 @@ class EditMovie(QMdiSubWindow):
 
         self.movie.original_name = self.le_original_title.text()
         self.movie.year = self.le_year.text()
+        self.movie.time = self.le_time.text()
 
         if self.le_poster.text():
             self.movie.poster = self.le_poster.text()
@@ -366,6 +394,7 @@ class EditMovie(QMdiSubWindow):
         self.le_title.setText(self.movie.name)
         self.le_original_title.setText(self.movie.original_name)
         self.le_year.setText(self.movie.year)
+        self.le_time.setText(self.movie.time)
         self.le_poster.setText(self.movie.poster)
         self.le_url.setText(self.movie.url)
         self.le_summary.setText(self.movie.summary)

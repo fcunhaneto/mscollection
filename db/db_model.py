@@ -117,6 +117,7 @@ class MovieCast(Base):
     cast = relationship(Cast)
 
 
+# TODO novo campo tempo de duração do filme
 class Movie(Base):
     __tablename__ = 'movie'
     id = Column(Integer, Sequence('movie_id_seq'), primary_key=True)
@@ -134,6 +135,7 @@ class Movie(Base):
     last_edit = Column(DateTime, nullable=False)
     new_edit = Column(DateTime, default=datetime.datetime.utcnow(),
                       nullable=False)
+    time = Column(String(10), nullable=True)
 
     media = relationship(Media, uselist=False)
     box = relationship(Box, uselist=False)

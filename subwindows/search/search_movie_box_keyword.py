@@ -113,7 +113,7 @@ class SearchBoxKeyword(QMdiSubWindow):
         """
         self.table.clear()
         self.table.setRowCount(0)
-        self.table.setColumnCount(6)
+        self.table.setColumnCount(7)
         self.rows = 0
 
         headers = [
@@ -121,6 +121,7 @@ class SearchBoxKeyword(QMdiSubWindow):
             texts.box,
             texts.keyword,
             texts.media_s,
+            texts.lb_time,
             texts.year_s,
             'id'
         ]
@@ -130,10 +131,11 @@ class SearchBoxKeyword(QMdiSubWindow):
         col_width = self.width - 40
         self.table.setColumnWidth(0, 0.3 * col_width)
         self.table.setColumnWidth(1, 0.3 * col_width)
-        self.table.setColumnWidth(2, 0.2 * col_width)
+        self.table.setColumnWidth(2, 0.1 * col_width)
         self.table.setColumnWidth(3, 0.1 * col_width)
         self.table.setColumnWidth(4, 0.1 * col_width)
-        self.table.setColumnWidth(5, 0)
+        self.table.setColumnWidth(5, 0.1 * col_width)
+        self.table.setColumnWidth(6, 0)
 
         self.table.verticalHeader().setVisible(False)
         self.table.setStyleSheet('background-color: #FFFFFF;')
@@ -145,7 +147,7 @@ class SearchBoxKeyword(QMdiSubWindow):
         When the table is self-reclassified repaint it.
         """
         for r in range(self.rows):
-            for i in range(6):
+            for i in range(7):
                 if r % 2 == 0:
                     self.table.item(r, i).setBackground(
                         QColor(240, 250, 228))
@@ -162,7 +164,7 @@ class SearchBoxKeyword(QMdiSubWindow):
         :param col: The number of the column on which the cell was clicked.
         """
         if self.row_select != row and col == 0:
-            movie_id = self.table.item(row, 5).text()
+            movie_id = self.table.item(row, 6).text()
             movie = self.movie.get(movie_id)
             self.main.view_html(movie.view_url, movie.name)
 
@@ -204,11 +206,11 @@ class SearchBoxKeyword(QMdiSubWindow):
             else:
                 self.table.setItem(self.rows, 3, QTableWidgetItem(''))
 
-            self.table.setItem(self.rows, 4, QTableWidgetItem(movie.year))
+            self.table.setItem(self.rows, 4, QTableWidgetItem(movie.time))
+            self.table.setItem(self.rows, 5, QTableWidgetItem(movie.year))
+            self.table.setItem(self.rows, 6, QTableWidgetItem(str(movie.id)))
 
-            self.table.setItem(self.rows, 5, QTableWidgetItem(str(movie.id)))
-
-            for i in range(6):
+            for i in range(7):
                 if self.rows % 2 == 0:
                     self.table.item(self.rows, i).setBackground(
                         QColor(240, 250, 228))
