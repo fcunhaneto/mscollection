@@ -45,6 +45,10 @@ from subwindows.search.search_movie_media_year import SearchMovieMediaYear
 from subwindows.search.search_series_key_media_year import \
     SearchSeriesKeyMediaYear
 from subwindows.search.search_episodes import SearchEpisodes
+from subwindows.search.view_movie_web_url import ViewMovieUrl
+from subwindows.search.view_series_web_url import ViewSeriesUrl
+from subwindows.search.view_movie_search_url import  ViewMovieSearchUrl
+from subwindows.search.view_series_search_url import  ViewSeriesSearchUrl
 
 from subwindows.search.views_help import ViewsHelp
 
@@ -225,6 +229,10 @@ class MSCollection(QMainWindow):
         self.actions_search_movie_actor_character = QAction(text, self)
         self.actions_search_movie_actor_character.triggered.connect(
             lambda: self.search_actor_character('movie'))
+        self.actions_view_movie_web_url = QAction(
+            texts.lb_url, self, triggered=self.view_movie_web_url)
+        self.actions_view_movie_search_url = QAction(
+            texts.lb_search_url, self, triggered=self.view_movie_search_url)
 
         self.actions_search_series_title = QAction(
             texts.title_s, self, triggered=self.search_series_title)
@@ -244,6 +252,10 @@ class MSCollection(QMainWindow):
         text = texts.season_p + '/' + texts.episode_p
         self.actions_search_episode = QAction(
             text, self, triggered=self.search_episode)
+        self.actions_view_series_web_url = QAction(
+            texts.lb_url, self, triggered=self.view_series_web_url)
+        self.actions_view_series_search_url = QAction(
+            texts.lb_search_url, self, triggered=self.view_series_search_url)
 
         # AddAction Search
 
@@ -254,6 +266,8 @@ class MSCollection(QMainWindow):
         self.menu_search_movies.addAction(self.actions_movie_media_year)
         self.menu_search_movies.addAction(
             self.actions_search_movie_actor_character)
+        self.menu_search_movies.addAction(self.actions_view_movie_web_url)
+        self.menu_search_movies.addAction(self.actions_view_movie_search_url)
 
         self.menu_search_series.addAction(self.actions_search_series_title)
         self.menu_search_series.addAction(self.actions_search_series_category)
@@ -263,6 +277,8 @@ class MSCollection(QMainWindow):
         self.menu_search_series.addAction(
             self.actions_search_series_actor_character)
         self.menu_search_series.addAction(self.actions_search_episode)
+        self.menu_search_series.addAction(self.actions_view_series_web_url)
+        self.menu_search_series.addAction(self.actions_view_series_search_url)
 
         self.menu_search.addAction(self.menu_search_movies.menuAction())
         self.menu_search.addAction(self.menu_search_series.menuAction())
@@ -427,6 +443,26 @@ class MSCollection(QMainWindow):
 
     def search_episode(self):
         subwindow = SearchEpisodes(self)
+        self.mdi_area.addSubWindow(subwindow)
+        subwindow.show()
+
+    def view_movie_web_url(self):
+        subwindow = ViewMovieUrl(self)
+        self.mdi_area.addSubWindow(subwindow)
+        subwindow.show()
+
+    def view_series_web_url(self):
+        subwindow = ViewSeriesUrl(self)
+        self.mdi_area.addSubWindow(subwindow)
+        subwindow.show()
+
+    def view_movie_search_url(self):
+        subwindow = ViewMovieSearchUrl(self)
+        self.mdi_area.addSubWindow(subwindow)
+        subwindow.show()
+
+    def view_series_search_url(self):
+        subwindow = ViewSeriesSearchUrl(self)
         self.mdi_area.addSubWindow(subwindow)
         subwindow.show()
 

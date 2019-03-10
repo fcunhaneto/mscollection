@@ -53,6 +53,7 @@ episode_s = 'Episódio'
 episode_p = 'Episódios'
 now = 'agora'
 selected = 'selecione'
+url = 'URL'
 
 episode_cod = 'Código do Episódio'
 ms = 'Minha Série'
@@ -84,6 +85,7 @@ help_edit_movie = 'Ajuda Editar Filmes'
 help_edit_series = 'Ajuda Editar Séries'
 help_edit_cast = 'Ajuda Editar Elenco'
 table_movie_categories = 'Tabela Filmes Categoria'
+search_web_url = 'Pesquisar Web Url Po Título'
 
 # Labels
 lb_search_imdb = 'Insira a URL do IMDB'
@@ -109,10 +111,10 @@ lb_total = 'Total'
 lb_episode_search = 'Pesquisar Episódio'
 lb_select_series = 'Primeiro selecione a série'
 lb_time = 'Tempo'
-
+lb_search_url = 'Url da Pesquisa'
 # Table Headers
 code = 'Cód.'
-
+last_edit = 'Última Edição'
 # Buttons
 pb_save = 'SALVAR'
 pb_delete = 'EXCLUIR'

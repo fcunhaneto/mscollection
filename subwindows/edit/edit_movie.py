@@ -118,6 +118,12 @@ class EditMovie(QMdiSubWindow):
         self.fm_1.setWidget(5, QFormLayout.LabelRole, self.lb_url)
         self.fm_1.setWidget(5, QFormLayout.FieldRole, self.le_url)
 
+        # Search URL
+        self.lb_search_url = QLabel(texts.lb_search_url)
+        self.le_search_url = le_create(255)
+        self.fm_1.setWidget(6, QFormLayout.LabelRole, self.lb_search_url)
+        self.fm_1.setWidget(6, QFormLayout.FieldRole, self.le_search_url)
+
         # Form Layout 2
         self.fm_2 = QFormLayout()
         self.fm_2.setContentsMargins(20, 20, 20, 20)
@@ -307,6 +313,7 @@ class EditMovie(QMdiSubWindow):
             self.movie.poster = path + '/images/poster_placeholder.png'
 
         self.movie.url = self.le_url.text()
+        self.movie.search_url = self.le_search_url.text()
         self.movie.summary = self.le_summary.toPlainText()
 
         id, name = get_combobox_info(self.cb_media)
@@ -397,6 +404,7 @@ class EditMovie(QMdiSubWindow):
         self.le_time.setText(self.movie.time)
         self.le_poster.setText(self.movie.poster)
         self.le_url.setText(self.movie.url)
+        self.le_search_url.setText(self.movie.search_url)
         self.le_summary.setText(self.movie.summary)
 
         if self.movie.media_id:
@@ -450,6 +458,7 @@ class EditMovie(QMdiSubWindow):
         self.le_time.setText('')
         self.le_poster.setText('')
         self.le_url.setText('')
+        self.le_search_url.setText('')
         self.le_summary.setText('')
         movie = db_select_all(self.session, Movie)
         populate_combobox(self.cb_select, movie)

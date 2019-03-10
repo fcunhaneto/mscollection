@@ -346,6 +346,11 @@ class InsertSeries(QMdiSubWindow):
         self.series.year = self.le_year.text()
         self.series.seasons = self.le_season.text()
 
+        if self.le_imdb_url.isEnabled():
+            self.series.search_url = self.le_imdb_url.text()
+        elif self.le_ad_url.isEnabled():
+            self.series.search_url = self.le_ad_url.text()
+
         if self.le_poster.text():
             self.series.poster = self.le_poster.text()
         else:

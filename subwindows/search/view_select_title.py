@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import QMdiSubWindow
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 
 
+# TODO Passar isso para uma janela simples sem uso do QWebEngineView
+# porque quando do upgrade da placa de vídeo erros podem ocorrer
 class ViewSelectTitle(QMdiSubWindow):
     def __init__(self, url, title):
         """

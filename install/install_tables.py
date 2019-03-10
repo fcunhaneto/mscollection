@@ -124,6 +124,7 @@ class Movie(Base):
     new_edit = Column(DateTime, default=datetime.datetime.utcnow(),
                        nullable=False)
     time = Column(String(10), nullable=True)
+    search_url = Column(String(255), nullable=True)
 
     media = relationship(Media, uselist=False)
     box = relationship(Box, uselist=False)
@@ -194,6 +195,7 @@ class Series(Base):
     last_edit = Column(DateTime, nullable=False)
     new_edit = Column(DateTime, default=datetime.datetime.utcnow(),
                       nullable=False)
+    search_url = Column(String(255), nullable=True)
 
     media = relationship(Media, uselist=False)
     keyword = relationship(KeyWord, uselist=False)

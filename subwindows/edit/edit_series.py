@@ -156,6 +156,11 @@ class EditSeries(QMdiSubWindow):
         self.le_poster = le_create(255)
         self.fm_2.setWidget(4, QFormLayout.LabelRole, self.lb_poster)
         self.fm_2.setWidget(4, QFormLayout.FieldRole, self.le_poster)
+        # Web URL
+        self.lb_search_url = QLabel(texts.lb_search_url)
+        self.le_search_url = le_create(255)
+        self.fm_2.setWidget(5, QFormLayout.LabelRole, self.lb_search_url)
+        self.fm_2.setWidget(5, QFormLayout.FieldRole, self.le_search_url)
 
         # Horizontal Layout for Frame layout
         self.hbox_fms = QHBoxLayout()
@@ -278,6 +283,7 @@ class EditSeries(QMdiSubWindow):
             self.movie.series = path + '/images/poster_placeholder.png'
 
         self.series.url = self.le_url.text()
+        self.series.search_url = self.le_search_url.text()
         self.series.summary = self.le_summary.toPlainText()
 
         id, name = get_combobox_info(self.cb_media)
@@ -367,6 +373,7 @@ class EditSeries(QMdiSubWindow):
         self.le_season.setText(self.series.seasons)
         self.le_poster.setText(self.series.poster)
         self.le_url.setText(self.series.url)
+        self.le_search_url.setText(self.series.search_url)
         self.le_summary.setText(self.series.summary)
 
         if self.series.media_id:

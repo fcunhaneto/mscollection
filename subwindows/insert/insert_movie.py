@@ -358,6 +358,11 @@ class InsertMovie(QMdiSubWindow):
         self.movie.year = self.le_year.text()
         self.movie.time = self.le_time.text()
 
+        if self.le_imdb_url.isEnabled():
+            self.movie.search_url = self.le_imdb_url.text()
+        elif self.le_ad_url.isEnabled():
+            self.movie.search_url = self.le_ad_url.text()
+
         if self.le_poster.text():
             self.movie.poster = self.le_poster.text()
         else:
