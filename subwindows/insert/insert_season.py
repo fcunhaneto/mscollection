@@ -95,6 +95,8 @@ class InsertSeason(QMdiSubWindow):
         # IMDB URL
         self.lb_url_imdb = QLabel(texts.lb_search_season_imdb)
         self.le_url_imdb = le_create()
+        self.le_url_imdb.returnPressed.connect(lambda site='imdb':
+                                               self.scraping_episodes(site))
 
         self.fm_left.setWidget(3, QFormLayout.LabelRole, self.lb_url_imdb)
         self.fm_left.setWidget(3, QFormLayout.FieldRole, self.le_url_imdb)
@@ -102,6 +104,8 @@ class InsertSeason(QMdiSubWindow):
         # Minha Série URL
         self.lb_urL_ms = QLabel(texts.lb_search_season_ms)
         self.le_url_ms = le_create(tooltip=texts.ms_episode_search)
+        self.le_url_ms.returnPressed.connect(lambda site='ms':
+                                             self.scraping_episodes(site))
 
         self.fm_left.setWidget(4, QFormLayout.LabelRole, self.lb_urL_ms)
         self.fm_left.setWidget(4, QFormLayout.FieldRole, self.le_url_ms)

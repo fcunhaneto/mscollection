@@ -687,6 +687,8 @@ class InsertMovie(QMdiSubWindow):
         self.lb_ad_url.setHidden(True)
         self.le_imdb_url.setEnabled(True)
         self.le_imdb_url.setHidden(False)
+        self.le_imdb_url.returnPressed. \
+            connect(lambda type='imdb': self.set_movie_url(type))
         self.le_ad_url.setEnabled(False)
         self.le_ad_url.setHidden(True)
         self.pb_search_imdb.setEnabled(True)
@@ -717,6 +719,8 @@ class InsertMovie(QMdiSubWindow):
         self.le_imdb_url.setHidden(True)
         self.le_ad_url.setEnabled(True)
         self.le_ad_url.setHidden(False)
+        self.le_ad_url.returnPressed. \
+            connect(lambda type='ad': self.set_movie_url(type))
         self.pb_search_imdb.setEnabled(False)
         self.pb_search_imdb.setHidden(True)
         self.pb_search_ad.setEnabled(True)
