@@ -42,7 +42,7 @@ class InsertSeries(QMdiSubWindow):
         width = int(0.95 * main.frameSize().width())
         height = int(0.8 * main.frameSize().height())
         self.setGeometry(0, 0, width, height)
-        self.tb_witdh = (0.5 * width) - 50
+        self.tb_width = (0.5 * width) - 50
 
         self.subwindow = QWidget()
         p = self.palette()
@@ -249,10 +249,10 @@ class InsertSeries(QMdiSubWindow):
         ]
         self.table.setHorizontalHeaderLabels(self.headers)
 
-        self.table.setColumnWidth(0, 0.30 * self.tb_witdh)
-        self.table.setColumnWidth(1, 0.40 * self.tb_witdh)
-        self.table.setColumnWidth(2, 0.15 * self.tb_witdh)
-        self.table.setColumnWidth(3, 0.15 * self.tb_witdh)
+        self.table.setColumnWidth(0, 0.30 * self.tb_width)
+        self.table.setColumnWidth(1, 0.40 * self.tb_width)
+        self.table.setColumnWidth(2, 0.15 * self.tb_width)
+        self.table.setColumnWidth(3, 0.15 * self.tb_width)
 
         self.rows = 0
         self.cb_actor = []
@@ -321,11 +321,15 @@ class InsertSeries(QMdiSubWindow):
         """
         width = event.size().width()
         height = event.size().height()
-        self.tb_witdh = (0.5 * width) - 50
+        self.tb_width = (0.5 * width) - 50
 
+        self.table.setColumnWidth(0, 0.30 * self.tb_width)
+        self.table.setColumnWidth(1, 0.40 * self.tb_width)
+        self.table.setColumnWidth(2, 0.15 * self.tb_width)
+        self.table.setColumnWidth(3, 0.15 * self.tb_width)
         for i in range(self.rows):
-            self.cb_actor[i].setMaximumWidth(0.4 * self.tb_witdh)
-            self.cb_character[i].setMaximumWidth(0.4 * self.tb_witdh)
+            self.cb_actor[i].setMaximumWidth(0.4 * self.tb_width)
+            self.cb_character[i].setMaximumWidth(0.4 * self.tb_width)
 
         # Important don't delete it
         QMdiSubWindow.resizeEvent(self, event)

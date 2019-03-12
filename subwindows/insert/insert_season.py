@@ -284,16 +284,23 @@ class InsertSeason(QMdiSubWindow):
         """
         width = event.size().width()
         height = event.size().height()
-        self.tb_witdh = (0.5 * width) - 50
+        self.tb_witdh_cast = (0.5 * width) - 50
         self.tb_witdh_episode = width - 50
 
-        for i in range(self.rows_cast):
-            self.cb_actor[i].setMaximumWidth(0.4 * self.tb_witdh)
-            self.cb_character[i].setMaximumWidth(0.4 * self.tb_witdh)
+        self.table_cast.setColumnWidth(0, 0.30 * self.tb_witdh_cast)
+        self.table_cast.setColumnWidth(1, 0.40 * self.tb_witdh_cast)
+        self.table_cast.setColumnWidth(2, 0.15 * self.tb_witdh_cast)
+        self.table_cast.setColumnWidth(3, 0.15 * self.tb_witdh_cast)
 
         self.table_episode.setColumnWidth(0, 0.05 * self.tb_witdh_episode)
         self.table_episode.setColumnWidth(1, 0.20 * self.tb_witdh_episode)
         self.table_episode.setColumnWidth(2, 0.70 * self.tb_witdh_episode)
+
+        for i in range(self.rows_cast):
+            self.cb_actor[i].setMaximumWidth(0.4 * self.tb_witdh_cast)
+            self.cb_character[i].setMaximumWidth(0.4 * self.tb_witdh_cast)
+
+
 
         # Important don't delete it
         QMdiSubWindow.resizeEvent(self, event)
